@@ -128,23 +128,15 @@ public class IBUToolKitForm {
         return mainPanel;
     }
 
-    private void setupUI() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(2, 1, JBUI.insets(8), -1, -1, false, false));
-        mainPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
-        JBTabbedPane tabbedPane = new JBTabbedPane();
-        mainPanel.add(tabbedPane, new GridConstraints(0, 0, 1, 1, 0, 3, 3, 3, null, null, null));
-        tabbedPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
-        JPanel component = new JPanel();
-        component.setLayout(new GridLayoutManager(2, 1, JBUI.insets(8), -1, -1, false, false));
-        tabbedPane.addTab("Bundle Config", null, component, null);
-        component.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
+    private JPanel getBundleConfigPanel() {
+        JPanel bundleConfigPanel = new JPanel();
+        bundleConfigPanel.setLayout(new GridLayoutManager(2, 1, JBUI.insets(8), -1, -1, false, false));
+        bundleConfigPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
         JBScrollPane comp2 = new JBScrollPane();
-        component.add(comp2, new GridConstraints(0, 0, 1, 1, 0, 3, 7, 7, null, null, null));
         comp2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
+        bundleConfigPanel.add(comp2, new GridConstraints(0, 0, 1, 1, 0, 3, 7, 7, null, null, null));
         JPanel viewportView = new JPanel();
         viewportView.setLayout(new GridLayoutManager(1, 3, JBUI.emptyInsets(), -1, -1, true, true));
-        comp2.setViewportView(viewportView);
         viewportView.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
         JBScrollPane comp3 = new JBScrollPane();
         viewportView.add(comp3, new GridConstraints(0, 0, 1, 1, 0, 3, 3, 7, null, null, null));
@@ -158,22 +150,25 @@ public class IBUToolKitForm {
         viewportView.add(comp5, new GridConstraints(0, 2, 1, 1, 0, 3, 3, 7, null, null, null));
         comp5.setBorder(BorderFactory.createTitledBorder(null, "源码编译", 0, 0, null, null));
         comp5.setViewportView(sourceList = new JList());
+        comp2.setViewportView(viewportView);
         JPanel comp6 = new JPanel();
         comp6.setLayout(new FlowLayout(2, 5, 5));
-        component.add(comp6, new GridConstraints(1, 0, 1, 1, 2, 1, 3, 3, null, null, null));
-        JButton button = new JButton();
-        (btnSave = button).setText("Save");
-        comp6.add(button);
-        JButton button2 = new JButton();
-        (btnSaveAndSync = button2).setText("Save and Sync");
-        comp6.add(button2);
-        JPanel component2 = new JPanel();
-        component2.setLayout(new GridLayoutManager(4, 1, JBUI.insets(8), -1, -1, false, false));
-        tabbedPane.addTab("Tools", null, component2, null);
-        component2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
+        bundleConfigPanel.add(comp6, new GridConstraints(1, 0, 1, 1, 2, 1, 3, 3, null, null, null));
+        btnSave = new JButton();
+        btnSave.setText("Save");
+        comp6.add(btnSave);
+        btnSaveAndSync = new JButton();
+        btnSaveAndSync.setText("Save and Sync");
+        comp6.add(btnSaveAndSync);
+        return bundleConfigPanel;
+    }
+    private JPanel getToolsPanel() {
+        JPanel toolsPanel = new JPanel();
+        toolsPanel.setLayout(new GridLayoutManager(4, 1, JBUI.insets(8), -1, -1, false, false));
+        toolsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
         JPanel comp7 = new JPanel();
         comp7.setLayout(new GridLayoutManager(3, 2, JBUI.insets(8), -1, -1, false, false));
-        component2.add(comp7, new GridConstraints(0, 0, 1, 1, 9, 0, 3, 3, null, null, null));
+        toolsPanel.add(comp7, new GridConstraints(0, 0, 1, 1, 9, 0, 3, 3, null, null, null));
         comp7.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Auto Download (Disable to speed up compilation)", 0, 0, null, null));
         JPanel comp8 = new JPanel();
         comp8.setLayout(new GridLayoutManager(1, 3, JBUI.emptyInsets(), -1, -1, true, true));
@@ -201,48 +196,48 @@ public class IBUToolKitForm {
         comp11.setText("Cargo DB:");
         comp11.setToolTipText("");
         comp10.add(comp11, new GridConstraints(0, 0, 1, 1, 8, 0, 3, 3, null, null, null));
-        ComboBox comboBox2 = new ComboBox();
-        (cbCargo = comboBox2).setPreferredSize(new Dimension(80, 30));
-        comp10.add(comboBox2, new GridConstraints(0, 1, 1, 1, 0, 0, 3, 3, null, null, null));
-        JButton button4 = new JButton();
-        (btnPullCargo = button4).setText("Fetch");
-        button4.setToolTipText("");
-        comp10.add(button4, new GridConstraints(0, 2, 1, 1, 0, 0, 3, 3, null, null, null));
+        cbCargo = new ComboBox();
+        cbCargo.setPreferredSize(new Dimension(80, 30));
+        comp10.add(cbCargo, new GridConstraints(0, 1, 1, 1, 0, 0, 3, 3, null, null, null));
+        btnPullCargo = new JButton();
+        btnPullCargo.setText("Fetch");
+        btnPullCargo.setToolTipText("");
+        comp10.add(btnPullCargo, new GridConstraints(0, 2, 1, 1, 0, 0, 3, 3, null, null, null));
         JPanel comp12 = new JPanel();
         comp12.setLayout(new GridLayoutManager(1, 3, JBUI.emptyInsets(), -1, -1, true, false));
         comp7.add(comp12, new GridConstraints(1, 0, 1, 1, 0, 3, 3, 3, null, null, null));
         JLabel comp13 = new JLabel();
         comp13.setText("FoxPage Package:");
         comp12.add(comp13, new GridConstraints(0, 0, 1, 1, 8, 0, 3, 3, null, null, null));
-        ComboBox comboBox3 = new ComboBox();
-        (cbFoxPage = comboBox3).setPreferredSize(new Dimension(80, 30));
-        comp12.add(comboBox3, new GridConstraints(0, 1, 1, 1, 0, 0, 3, 3, null, null, null));
-        JButton button5 = new JButton();
-        (btbPullFoxPage = button5).setText("Fetch");
-        comp12.add(button5, new GridConstraints(0, 2, 1, 1, 0, 0, 3, 3, null, null, null));
+        cbFoxPage = new ComboBox();
+        cbFoxPage.setPreferredSize(new Dimension(80, 30));
+        comp12.add(cbFoxPage, new GridConstraints(0, 1, 1, 1, 0, 0, 3, 3, null, null, null));
+        btbPullFoxPage = new JButton();
+        btbPullFoxPage.setText("Fetch");
+        comp12.add(btbPullFoxPage, new GridConstraints(0, 2, 1, 1, 0, 0, 3, 3, null, null, null));
         JPanel comp14 = new JPanel();
         comp14.setLayout(new GridLayoutManager(1, 3, JBUI.emptyInsets(), -1, -1, true, false));
         comp7.add(comp14, new GridConstraints(1, 1, 1, 1, 0, 3, 3, 3, null, null, null));
         JLabel comp15 = new JLabel();
         comp15.setText("RN Package:");
         comp14.add(comp15, new GridConstraints(0, 0, 1, 1, 8, 0, 3, 3, null, null, null));
-        ComboBox comboBox4 = new ComboBox();
-        (cbRn = comboBox4).setPreferredSize(new Dimension(80, 30));
-        comp14.add(comboBox4, new GridConstraints(0, 1, 1, 1, 0, 0, 3, 3, null, null, null));
-        JButton button6 = new JButton();
-        (btnPullRN = button6).setText("Fetch");
-        comp14.add(button6, new GridConstraints(0, 2, 1, 1, 0, 0, 3, 3, null, null, null));
-        JButton button7 = new JButton();
-        (btnSaveSettings = button7).setText("Save");
-        comp7.add(button7, new GridConstraints(2, 0, 1, 1, 0, 1, 3, 0, null, null, null));
-        JButton button8 = new JButton();
-        (btnSaveSettingAndSync = button8).setHorizontalTextPosition(0);
-        button8.setOpaque(true);
-        button8.setText("Save and Sync");
-        comp7.add(button8, new GridConstraints(2, 1, 1, 1, 0, 3, 3, 3, null, null, null));
+        cbRn = new ComboBox();
+        cbRn.setPreferredSize(new Dimension(80, 30));
+        comp14.add(cbRn, new GridConstraints(0, 1, 1, 1, 0, 0, 3, 3, null, null, null));
+        btnPullRN = new JButton();
+        btnPullRN.setText("Fetch");
+        comp14.add(btnPullRN, new GridConstraints(0, 2, 1, 1, 0, 0, 3, 3, null, null, null));
+        btnSaveSettings = new JButton();
+        btnSaveSettings.setText("Save");
+        comp7.add(btnSaveSettings, new GridConstraints(2, 0, 1, 1, 0, 1, 3, 0, null, null, null));
+        btnSaveSettingAndSync = new JButton();
+        btnSaveSettingAndSync.setHorizontalTextPosition(0);
+        btnSaveSettingAndSync.setOpaque(true);
+        btnSaveSettingAndSync.setText("Save and Sync");
+        comp7.add(btnSaveSettingAndSync, new GridConstraints(2, 1, 1, 1, 0, 3, 3, 3, null, null, null));
         JPanel comp16 = new JPanel();
         comp16.setLayout(new GridLayoutManager(2, 1, JBUI.emptyInsets(), -1, -1, false, false));
-        component2.add(comp16, new GridConstraints(1, 0, 1, 1, 0, 3, 3, 3, null, null, null));
+        toolsPanel.add(comp16, new GridConstraints(1, 0, 1, 1, 0, 3, 3, 3, null, null, null));
         comp16.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "IBU-CLI", 0, 0, null, null));
         JPanel comp17 = new JPanel();
         comp17.setLayout(new FlowLayout(0, 5, 5));
@@ -252,68 +247,85 @@ public class IBUToolKitForm {
         JLabel comp18 = new JLabel();
         comp18.setText("Version:");
         comp17.add(comp18);
-        JLabel label = new JLabel();
-        (lbVersionNumber = label).setText("loading...");
-        comp17.add(label);
-        JLabel label2 = new JLabel();
-        lbHasNew = label2;
-        Font $$$getFont$$$ = getFont(null, -1, 10, label2.getFont());
-        if ($$$getFont$$$ != null) {
-            label2.setFont($$$getFont$$$);
+        lbVersionNumber = new JLabel();
+        lbVersionNumber.setText("loading...");
+        comp17.add(lbVersionNumber);
+        lbHasNew = new JLabel();
+        Font font = getFont(null, -1, 10, lbHasNew.getFont());
+        if (font != null) {
+            lbHasNew.setFont(font);
         }
-        label2.setForeground(new Color(-393216));
-        label2.setHorizontalAlignment(SwingConstants.LEFT);
-        label2.setHorizontalTextPosition(SwingConstants.LEFT);
-        label2.setText("new");
-        label2.setVerticalAlignment(SwingConstants.BOTTOM);
-        label2.setVerticalTextPosition(SwingConstants.BOTTOM);
-        label2.setVisible(false);
-        comp17.add(label2);
+        lbHasNew.setForeground(new Color(-393216));
+        lbHasNew.setHorizontalAlignment(SwingConstants.LEFT);
+        lbHasNew.setHorizontalTextPosition(SwingConstants.LEFT);
+        lbHasNew.setText("new");
+        lbHasNew.setVerticalAlignment(SwingConstants.BOTTOM);
+        lbHasNew.setVerticalTextPosition(SwingConstants.BOTTOM);
+        lbHasNew.setVisible(false);
+        comp17.add(lbHasNew);
         JPanel comp19 = new JPanel();
         comp19.setLayout(new FlowLayout(0, 0, 0));
         comp16.add(comp19, new GridConstraints(1, 0, 1, 1, 0, 3, 3, 3, null, null, null));
-        JButton button9 = new JButton();
-        (btnUpgrade = button9).setLabel("Upgrade");
-        button9.setText("Upgrade");
-        comp19.add(button9);
+        btnUpgrade = new JButton();
+        btnUpgrade.setLabel("Upgrade");
+        btnUpgrade.setText("Upgrade");
+        comp19.add(btnUpgrade);
         JPanel comp20 = new JPanel();
         comp20.setLayout(new GridLayoutManager(1, 1, JBUI.emptyInsets(), -1, -1, false, false));
-        component2.add(comp20, new GridConstraints(2, 0, 1, 1, 0, 3, 3, 3, null, null, null));
+        toolsPanel.add(comp20, new GridConstraints(2, 0, 1, 1, 0, 3, 3, 3, null, null, null));
         comp20.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Other Tools", 0, 0, null, null));
-        JButton button10 = new JButton();
-        (btnClean = button10).setMargin(JBUI.emptyInsets());
-        button10.setText("Clean Build Directories");
-        button10.setToolTipText("Clean All build directories");
-        comp20.add(button10, new GridConstraints(0, 0, 1, 1, 9, 0, 3, 0, null, null, null));
+        btnClean = new JButton();
+        btnClean.setMargin(JBUI.emptyInsets());
+        btnClean.setText("Clean Build Directories");
+        btnClean.setToolTipText("Clean All build directories");
+        comp20.add(btnClean, new GridConstraints(0, 0, 1, 1, 9, 0, 3, 0, null, null, null));
         JBScrollPane comp21 = new JBScrollPane();
-        component2.add(comp21, new GridConstraints(3, 0, 1, 1, 0, 3, 7, 7, null, null, null));
+        toolsPanel.add(comp21, new GridConstraints(3, 0, 1, 1, 0, 3, 7, 7, null, null, null));
         terminalPane = new JPanel();
         terminalPane.setLayout(new BorderLayout(0, 0));
         terminalPane.setMinimumSize(new Dimension(-1, 300));
         terminalPane.setPreferredSize(new Dimension(0, 300));
         comp21.setViewportView(terminalPane);
-        JPanel comp22 = new JPanel();
-        comp22.setLayout(new FlowLayout(2, 5, 5));
-        mainPanel.add(comp22, new GridConstraints(1, 0, 1, 1, 0, 3, 3, 3, null, null, null));
-        JLabel comp23 = new JLabel();
-        comp23.setText("Version:");
-        comp22.add(comp23);
-        JLabel label3 = new JLabel();
-        (lbPrjVersion = label3).setText("loading...");
-        comp22.add(label3);
-        JLabel label4 = new JLabel();
-        lbPrjHasNew = label4;
-        Font font = getFont(null, -1, 10, label4.getFont());
+        return toolsPanel;
+    }
+
+    private JPanel getVersionInfo() {
+        JPanel versionPanel = new JPanel();
+        versionPanel.setLayout(new FlowLayout(2, 5, 5));
+        JLabel lbVersionTitle = new JLabel();
+        lbVersionTitle.setText("Version:");
+        versionPanel.add(lbVersionTitle);
+        
+        lbPrjVersion = new JLabel();
+        lbPrjVersion.setText("loading...");
+        versionPanel.add(lbPrjVersion);
+        
+        lbPrjHasNew = new JLabel();
+        Font font = getFont(null, -1, 10, lbPrjHasNew.getFont());
         if (font != null) {
-            label4.setFont(font);
+            lbPrjHasNew.setFont(font);
         }
-        label4.setForeground(new Color(-393216));
-        label4.setText("new");
-        label4.setVisible(false);
-        comp22.add(label4);
+        lbPrjHasNew.setForeground(new Color(-393216));
+        lbPrjHasNew.setText("new");
+        lbPrjHasNew.setVisible(false);
+        versionPanel.add(lbPrjHasNew);
+        
         lbPrjNewTip = new JLabel();
         lbPrjNewTip.setText("(可直接安装tools/IBUToolKit.jar)");
-        comp22.add(lbPrjNewTip);
+        versionPanel.add(lbPrjNewTip);
+        return versionPanel;
+    }
+
+    private void setupUI() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayoutManager(2, 1, JBUI.insets(8), -1, -1, false, false));
+        mainPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
+        JBTabbedPane tabbedPane = new JBTabbedPane();
+        tabbedPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, 0, 0, null, null));
+        tabbedPane.addTab("Bundle Config", null, getBundleConfigPanel(), null);
+        tabbedPane.addTab("Tools", null, getToolsPanel(), null);
+        mainPanel.add(tabbedPane, new GridConstraints(0, 0, 1, 1, 0, 3, 3, 3, null, null, null));
+        mainPanel.add(getVersionInfo(), new GridConstraints(1, 0, 1, 1, 0, 3, 3, 3, null, null, null));
     }
 
     private Font getFont(String name, int n, int n2, Font font) {
