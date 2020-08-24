@@ -28,7 +28,7 @@
 
   <actions>
     <!-- Add your actions here -->
-      <action id="IBUToolKitAction" class="com.trip.ibu.IBUToolKitAction" text="Han" description="Descriptionn" icon="/logo.png">
+      <action id="IBUToolKitAction" class="com.torlax.ibu.IBUToolKitAction" text="Han" description="Descriptionn" icon="/logo.png">
           <add-to-group group-id="Android.MainToolBarSdkGroup" anchor="last"/>
       </action>
   </actions>
